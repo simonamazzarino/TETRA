@@ -6,6 +6,8 @@ import datasets
 import nltk
 
 from presidio_analyzer import AnalyzerEngine
+from presidio_anonymizer import AnonymizerEngine
+from presidio_anonymizer.entities import RecognizerResult, OperatorConfig
 from datasets import load_dataset
 from nltk.tokenize import word_tokenize
 from transformers import AutoTokenizer
@@ -15,11 +17,25 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 analyzer = AnalyzerEngine()
+anonimyzer = AnonymizerEngine()
 
 def extract_named_entities(text):
     results = analyzer.analyze(text,entities=['DATE_TIME', 'NRP', 'LOCATION', 'PERSON', 'PHONE_NUMBER'], language='en')
     results = [result.entity_type for result in results]
     return results
+
+def analyzer_results(text):
+    results = analyzer.analyze(text,entities=['DATE_TIME', 'NRP', 'LOCATION', 'PERSON', 'PHONE_NUMBER'], language='en')
+    return results
+
+
+def anonimyzed_text(text, analyzer_results):
+    results = anonimyzer.anonymize(
+    text, analyzer_results=analyzer_results)
+
+    results = [results.text for result in results]
+    return results
+
 
 def count_words(text):
     words = word_tokenize(text)
