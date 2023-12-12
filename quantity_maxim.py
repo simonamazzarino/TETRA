@@ -19,22 +19,26 @@ nltk.download('stopwords')
 analyzer = AnalyzerEngine()
 anonimyzer = AnonymizerEngine()
 
+
+
 def extract_named_entities(text):
     results = analyzer.analyze(text,entities=['DATE_TIME', 'NRP', 'LOCATION', 'PERSON', 'PHONE_NUMBER'], language='en')
     results = [result.entity_type for result in results]
     return results
 
-def analyzer_results(text):
+def anonymized_text(text):
     results = analyzer.analyze(text,entities=['DATE_TIME', 'NRP', 'LOCATION', 'PERSON', 'PHONE_NUMBER'], language='en')
-    return results
 
+    operators = {
+    "DATE_TIME": OperatorConfig("replace", {"new_value": "DATE_TIME"}),
+    "NRP": OperatorConfig("replace",{"new_value": "NRP"},),
+    "LOCATION": OperatorConfig("replace", {"new_value": "LOCATION"}),
+    "PERSON": OperatorConfig("replace", {"new_value": "PERSON"}),
+    "PHONE_NUMBER": OperatorConfig("replace", {"new_value": "PHONE_NUMBER"})}
+    results = anonimyzer.anonymize(text, analyzer_results=results, operators=operators)
 
-def anonimyzed_text(text, analyzer_results):
-    results = anonimyzer.anonymize(
-    text, analyzer_results=analyzer_results)
+    return results.text
 
-    results = [results.text for result in results]
-    return results
 
 
 def count_words(text):
