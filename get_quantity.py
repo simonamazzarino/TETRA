@@ -112,8 +112,8 @@ def get_quantity(text_A, text_B = None):
         if n_entities_B != 0:
             boost = n_entities_B / len(content_tokens) if len(content_tokens) > 0 else 0
             if ((cohere_who(text_A, entities_B) == 1) or (cohere_where(text_A, entities_B) == 1) or (cohere_when(text_A, entities_B) == 1)):
-                 boost_cohere = 1 / len(content_tokens) if len(content_tokens) > 0 else 0 #faccio sempre così anche se c'è più di una NER che soddisfa la domanda. A me quello che interessa è che ce ne sia almeno una.
-            boost += boost_cohere
+                boost_cohere = 1 / len(content_tokens) if len(content_tokens) > 0 else 0 #faccio sempre così anche se c'è più di una NER che soddisfa la domanda. A me quello che interessa è che ce ne sia almeno una.
+                boost += boost_cohere
         
         
             words += boost * n_entities_B + boost_cohere
