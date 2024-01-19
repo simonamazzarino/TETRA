@@ -7,8 +7,8 @@ from presidio_anonymizer.entities import OperatorConfig
 
 from nltk.corpus import stopwords
 
-nltk.download('punkt')
-nltk.download('stopwords')
+#nltk.download('punkt')
+#nltk.download('stopwords')
 
 
 def extract_named_entities(text):
@@ -33,34 +33,34 @@ def anonymized_text(text):
     return results.text
 
 def cohere_who(text, has_person_entity):
-    contains_when = 'Who' in text.lower()
+    contains_who = 'who' in text.lower()
     
-    if contains_when and has_person_entity:
+    if contains_who and has_person_entity:
         return 1
-    elif contains_when and not has_person_entity:
+    elif contains_who and not has_person_entity:
         return -1
-    elif not contains_when and not has_person_entity:
+    elif not contains_who and not has_person_entity:
         return 0
-    elif not contains_when and has_person_entity:
+    elif not contains_who and has_person_entity:
         return 0
     
 
 def cohere_where(text, has_location_entity):
-    contains_when = 'Where' in text.lower()
+    contains_where = 'where' in text.lower()
     
-    if contains_when and has_location_entity:
+    if contains_where and has_location_entity:
         return 1
-    elif contains_when and not has_location_entity:
+    elif contains_where and not has_location_entity:
         return -1
-    elif not contains_when and not has_location_entity:
+    elif not contains_where and not has_location_entity:
         return 0
-    elif not contains_when and has_location_entity:
+    elif not contains_where and has_location_entity:
         return 0
     
 
 
 def cohere_when(text, has_datetime_entity):
-    contains_when = 'When' in text.lower()
+    contains_when = 'when' in text.lower()
     
     if contains_when and has_datetime_entity:
         return 1
@@ -111,10 +111,15 @@ def get_quantity(text_A, text_B = None):
 
         if n_entities_B != 0:
             boost = n_entities_B / len(content_tokens) if len(content_tokens) > 0 else 0
-            if ((cohere_who(text_A, entities_B) == 1) or (cohere_where(text_A, entities_B) == 1) or (cohere_when(text_A, entities_B) == 1)):
+            if ((cohere_who(text_A, entities_B) == 1) or 
+                (cohere_where(text_A, entities_B) == 1) or 
+                (cohere_when(text_A, entities_B) == 1)):
+                print ("Boost ok")
                 boost_cohere = 1 / len(content_tokens) if len(content_tokens) > 0 else 0 #faccio sempre così anche se c'è più di una NER che soddisfa la domanda. A me quello che interessa è che ce ne sia almeno una.
                 boost += boost_cohere
-        
+            else:
+                boost_cohere = 0
+                print ("No boost")
         
             words += boost * n_entities_B + boost_cohere
 
