@@ -125,4 +125,7 @@ def get_quantity(text_A, text_B = None):
 
         information_density = words / len(tokens) if len(tokens) > 0 else 0
 
+        if information_density > 1:
+            information_density = 1
+
         return information_density
