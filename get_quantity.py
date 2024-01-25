@@ -73,59 +73,38 @@ def cohere_when(text, has_datetime_entity):
     
 
 
-def get_quantity(text_A, text_B = None):
-    if text_B == None:
-        entities_A = extract_named_entities(text_A)
-        n_entities_A = len(entities_A)
-        text_A_anonymized = anonymized_text(text_A)
 
+def get_quantity(text_B, text_A = None):
+
+    entities_B = extract_named_entities(text_B)
+    n_entities_B = len(entities_B)
+    text_B_anonymized = anonymized_text(text_B)
+
+    tokens = nltk.word_tokenize(text_B_anonymized.lower())
+    stop_words = set(stopwords.words('english'))
+    content_tokens = [token for token in tokens if token.isalnum() and token not in stop_words]
+
+    words = 0
+    for word in content_tokens:
+            words += 1
+
+    if text_A is not None and n_entities_B != 0:
+        boost = n_entities_B / len(content_tokens) if len(content_tokens) > 0 else 0
+        if ((cohere_who(text_A, entities_B) == 1) or 
+            (cohere_where(text_A, entities_B) == 1) or 
+            (cohere_when(text_A, entities_B) == 1)):
+            #print ("Boost ok")
+            boost_cohere = 1 / len(content_tokens) if len(content_tokens) > 0 else 0 #faccio sempre così anche se c'è più di una NER che soddisfa la domanda. A me quello che interessa è che ce ne sia almeno una.
+            boost += boost_cohere
+        else:
+            boost_cohere = 0
+            #print ("No boost")
     
-        tokens = nltk.word_tokenize(text_A_anonymized.lower())
-        stop_words = set(stopwords.words('english'))
-        content_tokens = [token for token in tokens if token.isalnum() and token not in stop_words]
+        words += boost * n_entities_B + boost_cohere
 
-        words = 0
-        for word in content_tokens:
-                words += 1
+    information_density = words / len(tokens) if len(tokens) > 0 else 0
 
-        if n_entities_A != 0:
-                boost = n_entities_A / len(content_tokens) if len(content_tokens) > 0 else 0
-                words += boost * n_entities_A
+    if information_density > 1:
+        information_density = 1
 
-        information_density = words / len(tokens) if len(tokens) > 0 else 0
-
-        return information_density
-    
-    else:
-        entities_B = extract_named_entities(text_B)
-        n_entities_B = len(entities_B)
-        text_B_anonymized = anonymized_text(text_B)
-
-        tokens = nltk.word_tokenize(text_B_anonymized.lower())
-        stop_words = set(stopwords.words('english'))
-        content_tokens = [token for token in tokens if token.isalnum() and token not in stop_words]
-
-        words = 0
-        for word in content_tokens:
-                words += 1
-
-        if n_entities_B != 0:
-            boost = n_entities_B / len(content_tokens) if len(content_tokens) > 0 else 0
-            if ((cohere_who(text_A, entities_B) == 1) or 
-                (cohere_where(text_A, entities_B) == 1) or 
-                (cohere_when(text_A, entities_B) == 1)):
-                print ("Boost ok")
-                boost_cohere = 1 / len(content_tokens) if len(content_tokens) > 0 else 0 #faccio sempre così anche se c'è più di una NER che soddisfa la domanda. A me quello che interessa è che ce ne sia almeno una.
-                boost += boost_cohere
-            else:
-                boost_cohere = 0
-                print ("No boost")
-        
-            words += boost * n_entities_B + boost_cohere
-
-        information_density = words / len(tokens) if len(tokens) > 0 else 0
-
-        if information_density > 1:
-            information_density = 1
-
-        return information_density
+    return information_density
