@@ -1,5 +1,6 @@
 from googleapiclient import discovery
 from sentence_transformers import SentenceTransformer, util
+from get_quantity_optimized import get_quantity_opt
 
 
 ### Manner
@@ -36,8 +37,8 @@ def get_sim(model, comment, reply_to):
 
 ### Quantity
 
-def get_quantity(comment, reply_to):
-    return 1
+#def get_quantity(comment, reply_to):
+#    return 1
 
 ### Trust Class
 
@@ -65,13 +66,13 @@ class Trust:
         else:
             similarity = None
 
-        quantity = get_quantity(comment, reply_to)
+        quantity = get_quantity_opt(comment, reply_to)
 
         if self.API_KEY is not None:
             manner = 1 - get_manner(comment, self.perspective_client, mode)
         else: 
             manner = None
-
+            
         return [similarity, quantity, manner]
         
     
