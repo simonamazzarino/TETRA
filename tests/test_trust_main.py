@@ -45,7 +45,7 @@ def mock_perspective_client():
 
 @pytest.fixture
 def mock_sentence_transformer():
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     model.max_seq_length = 512
     return model
 
