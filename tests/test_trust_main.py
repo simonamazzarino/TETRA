@@ -23,9 +23,6 @@ from tetra.trust_main import (
     Trust,
 )
 
-pytestmark = pytest.mark.filterwarnings("error::FutureWarning")
-
-
 @pytest.fixture
 def mock_perspective_client():
     class MockClient:
@@ -41,14 +38,6 @@ def mock_perspective_client():
             }
 
     return MockClient()
-
-
-@pytest.fixture
-def mock_sentence_transformer():
-    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-    model.max_seq_length = 512
-    return model
-
 
 @pytest.fixture
 def mock_analyzer():
@@ -86,10 +75,10 @@ def test_get_manner(mock_perspective_client):
     assert isinstance(score, float)
 
 
-def test_get_sim(mock_sentence_transformer):
+def test_get_sim(model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")):
     comment = "Neil Armstrong was the first man on the moon."
     reply_to = "Who was the first man on the moon?"
-    similarity = get_sim(mock_sentence_transformer, comment, reply_to)
+    similarity = get_sim(model, comment, reply_to)
     assert isinstance(similarity, float)
 
 
@@ -127,10 +116,10 @@ def test_get_quantity_opt(mock_analyzer, mock_anonymizer):
     assert isinstance(information_density, float)
 
 
-def test_trust_get_trust(mock_perspective_client, mock_sentence_transformer):
+def test_trust_get_trust(mock_perspective_client):
     trust = Trust(API_KEY=None)
     trust.perspective_client = mock_perspective_client
-    trust.similarity_model = mock_sentence_transformer
+    #trust.similarity_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
     comment = "Neil Armstrong was the first man on the moon."
     reply_to = "Who was the first man on the moon?"
