@@ -1,3 +1,6 @@
+import nltk
+nltk.download('stopwords')
+
 from presidio_analyzer import AnalyzerEngine, RecognizerResult
 
 from presidio_anonymizer import AnonymizerEngine
@@ -6,7 +9,7 @@ import pytest
 
 from sentence_transformers import SentenceTransformer
 
-from trust_main import (
+from tetra.trust_main import (
     perspective,
     get_score,
     get_manner,
