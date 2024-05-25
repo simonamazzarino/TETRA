@@ -5,6 +5,12 @@ databricks_dolly_open_questions.csv
 quantity_csv.csv
 trust_quantity_quality.csv
 trust_network.json
+get_quantity_optimized.py
+Manner - Aggressiveness Detector.ipynb
+Manner - Perspective AI.ipynb
+Perspective Tutorial.ipynb
+quantity_maxim.ipynb
+Trust - QualityMannerRelation.ipynb
 
 
 # Editor files
