@@ -5,6 +5,9 @@ description = "TETRA: TExtual TRust Analyzer"
 authors = ["Simona Mazzarino <https://github.com/simonamazzarino>", "Federico Mazzoni <https://github.com/FedericoMz>"]
 license = "\"GPL\""
 readme = "README.md"
+homepage = "https://github.com/simonamazzarino/TETRA"
+repository = "https://github.com/simonamazzarino/TETRA"
+packages = [{include = "tetra"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
