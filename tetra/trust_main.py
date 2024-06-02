@@ -98,7 +98,7 @@ def get_sim(model: SentenceTransformer, comment: str, reply_to: str) -> float:
     embeddings1 = model.encode([comment], convert_to_tensor=True)
     embeddings2 = model.encode([reply_to], convert_to_tensor=True)
 
-    return float(util.cos_sim(embeddings1, embeddings2))
+    return (float(util.cos_sim(embeddings1, embeddings2)) + 1)/2
 
 
 # Quantity
