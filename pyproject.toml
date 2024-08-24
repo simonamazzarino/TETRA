@@ -2,7 +2,7 @@
 name = "tetra"
 version = "0.1.0"
 description = "TETRA: TExtual TRust Analyzer"
-authors = ["Simona Mazzarino <https://github.com/simonamazzarino>", "Federico Mazzoni <https://github.com/FedericoMz>"]
+authors = ["Simona Mazzarino <simona.mazzarino@gmail.com>", "Federico Mazzoni <federico.mazzoni@phd.unipi.it>"]
 license = "\"GPL\""
 readme = "README.md"
 homepage = "https://github.com/simonamazzarino/TETRA"
