@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tetra-textual-trust-analyzer"
-version = "0.1.0"
+version = "0.1.1"
 description = "TETRA: TExtual TRust Analyzer"
 authors = ["Simona Mazzarino <simona.mazzarino@gmail.com>", "Federico Mazzoni <federico.mazzoni@phd.unipi.it>"]
 license = "\"GPL\""
