@@ -1,5 +1,5 @@
 # TETRA: TExtual TRust Analyzer
-This library provides tools for analyzing the trust between two people in a conversation analyzing their messages. The library focuses on evaluating manner, similarity, and quantity for each text. It leverages various NLP libraries and APIs, including Google's Perspective API, NLTK, Presidio, and Sentence Transformers.
+This library provides tools for analyzing the trust between two people in a conversation analyzing their messages. The library focuses on evaluating manner, similarity, and quantity for each text. It leverages various NLP libraries and APIs, including Google's Perspective API, Detoxify, NLTK, Presidio, and Sentence Transformers.
 
 ### Features
 
@@ -19,7 +19,7 @@ You can import the Trust class using
 ```python
 from tetra.trust_main import Trust
 ```
-Then you create a Trust objects and set your Perspective API key. If you don't already have a Perspective API key, you can visit this [link](https://perspectiveapi.com/) and create your own key. 
+Then you create a Trust objects and set your Perspective API key. If you don't already have a Perspective API key, you can visit this [link](https://perspectiveapi.com/) and create your own key. Otherwise, Tetra will default to Detoxify.
 
 ```python
 trust_analyzer = Trust('<insert-your-Perspective-API-key>')
