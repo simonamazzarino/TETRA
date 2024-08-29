@@ -3,7 +3,7 @@ This library provides tools for analyzing the trust between two people in a conv
 
 ### Features
 
-- **Manner Analysis**: Evaluates the manner of text using the Perspective API, checking for harmful content indicators such as toxicity, profanity, threats, etc.
+- **Manner Analysis**: Evaluates the manner of text using either Detoxify or Google's Perspective API, checking for harmful content indicators such as toxicity, profanity, threats, etc.
 - **Similarity Analysis**: Computes the cosine similarity between two pieces of text using a pre-trained sentence transformer model.
 - **Quantity Analysis**: Measures the informational density of text, taking into account named entities and coherence with another piece of text.
 
@@ -19,7 +19,7 @@ You can import the Trust class using
 ```python
 from tetra.trust_main import Trust
 ```
-Then you create a Trust objects and set your Perspective API key. If you don't already have a Perspective API key, you can visit this [link](https://perspectiveapi.com/) and create your own key. Otherwise, Tetra will default to Detoxify.
+Then, you create a Trust object and set your Perspective API key. If you don't already have a Perspective API key, you can visit this [link](https://perspectiveapi.com/) and create your own key. Otherwise, Tetra will default to Detoxify.
 
 ```python
 trust_analyzer = Trust('<insert-your-Perspective-API-key>')
